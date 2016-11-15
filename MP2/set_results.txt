@@ -1,4 +1,0 @@
-Operation	Naive_Time	Tiled_Time	Speedup
-Transpose	0.000000	37.000000	0.000000
-Matmul	0.000000		1.000000	0.000000
-Stencil	0.000000		1.000000	0.000000

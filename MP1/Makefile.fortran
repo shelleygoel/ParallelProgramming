@@ -1,0 +1,37 @@
+SHELL=/bin/bash
+
+CC=gfortran
+CCFLAGS = -Wall -O2 -fopenmp
+
+CMD = transpose multiply addition transpose_4C 
+SRC = $(CMD:=.f90)
+OBJ = $(SRC:.f90=.o) 
+
+all: $(CMD)
+
+transpose: transpose.o
+	$(CC) $(CCFLAGS) -o $@ $<
+
+transpose_4C: transpose_4C.o
+	$(CC) $(CCFLAGS) -o $@ $<
+
+multiply: multiply.o
+	$(CC) $(CCFLAGS) -o $@ $<
+
+addition: addition.o
+	$(CC) $(CCFLAGS) -o $@ $<
+
+transpose.o: transpose.f90
+	$(CC) $(CCFLAGS) -c $<
+
+transpose_4C.o: transpose_4C.f90
+	$(CC) $(CCFLAGS) -c $<
+
+multiply.o: multiply.f90
+	$(CC) $(CCFLAGS) -c $<
+
+addition.o: addition.f90
+	$(CC) $(CCFLAGS) -c $<
+
+clean:
+	rm $(OBJ) $(CMD)

@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -l walltime=00:20:00
+#PBS -l nodes=3:ppn=12
+#PBS -N mp2
+#PBS -j oe
+
+# Move to your mp2 directory
+cd /home/sgoel3/mp2
+
+module load mvapich2/1.6-gcc+ifort
+
+rind=( 7189 4 20150)
+cind=( 7190 3589 2)
+
+iter=0
+for gsize in 7200 10080 20160
+do
+
+	for cores in 4 9 16 25 36
+	do
+
+		echo "Running with n=${gsize} p=${cores}" >> out_mp2_comp_comm.txt
+
+		# Run MP2
+		mpirun -n $cores ./jacobi2 $gsize 25 ${rind[$iter]} ${cind[$iter]} >> out_mp2_comp_comm.txt
+	
+	done
+	iter=$iter+1
+
+done
+

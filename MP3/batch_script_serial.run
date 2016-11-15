@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -l walltime=00:30:00
+#PBS -l nodes=1:ppn=12
+#PBS -N mp2
+#PBS -j oe
+
+# Move to your mp0 directory
+cd /home/sgoel3/mp2
+
+module load mpi
+
+rind=( 7189 4 20150)
+cind=( 7190 3589 2)
+
+iter=0
+for gsize in 7200 10080 20160
+do
+
+	for cores in 1
+	do
+
+		echo "Running with n=${gsize} p=${cores}" >> out_mp2_serial.txt
+
+		# Run MP2
+		mpirun -n $cores ./jacobi $gsize 25 ${rind[$iter]} ${cind[$iter]} >> out_mp2_serial.txt
+	
+	done
+	iter=$iter+1
+
+done
+
